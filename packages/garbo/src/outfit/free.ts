@@ -21,7 +21,12 @@ import { AdventureArgument, toAdventure, wanderer } from "../garboWanderer";
 
 import { chooseBjorn } from "./bjorn";
 import { bonusGear, toyCupidBow } from "./dropsgear";
-import { applyCheeseBonus, cleaverCheck, validateGarbageFoldable } from "./lib";
+import {
+  applyCheeseBonus,
+  cleaverCheck,
+  ensureUnderwaterBreathing,
+  validateGarbageFoldable,
+} from "./lib";
 import { mimicExperienceNeeded } from "../resources/chestMimic";
 import {
   adventuresPerSweat,
@@ -86,6 +91,9 @@ export function freeFightOutfit(
       outfit,
     ),
   );
+  if (location.environment === "underwater") {
+    ensureUnderwaterBreathing(outfit);
+  }
   const mode =
     location === $location`The Deep Machine Tunnels`
       ? BonusEquipMode.DMT

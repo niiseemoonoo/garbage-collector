@@ -18,6 +18,7 @@ import {
   applyCheeseBonus,
   bestBjornalike,
   cleaverCheck,
+  ensureUnderwaterBreathing,
   useUPCsIfNeeded,
   validateGarbageFoldable,
 } from "./lib";
@@ -95,7 +96,7 @@ export function meatTargetOutfit(
 
   const underwater = location?.environment === "underwater";
   if (underwater) {
-    outfit.modifier.push("sea");
+    ensureUnderwaterBreathing(outfit);
   }
 
   if (outfit.familiar === $familiar`Jill-of-All-Trades`) {

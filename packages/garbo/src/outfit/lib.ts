@@ -17,6 +17,7 @@ import {
 } from "kolmafia";
 import {
   $class,
+  $effect,
   $familiar,
   $item,
   $items,
@@ -39,6 +40,24 @@ import {
   highMeatMonsterCount,
   wanderingCopytargetsRemaining,
 } from "../turns";
+
+export function ensureUnderwaterBreathing(outfit: Outfit): void {
+  const familiar = outfit.familiar;
+  if (
+    familiar &&
+    !familiar.underwater &&
+    !have($effect`Driving Waterproofly`) &&
+    !have($effect`Wet Willied`)
+  ) {
+    outfit.equipFirst(familiarWaterBreathingEquipment);
+  }
+  if (
+    !outfit.equipFirst(waterBreathingEquipment) &&
+    !outfit.modifier.includes("sea")
+  ) {
+    outfit.modifier.push("sea");
+  }
+}
 
 export function bestBjornalike(outfit: Outfit): Item | null {
   const bjornalikes = $items`Buddy Bjorn, Crown of Thrones`.filter((item) =>
